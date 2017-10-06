@@ -20,6 +20,10 @@ def deploy_contract(contractFromSolc):
 
     return contract_factory(address=contract_address)
 
+def check_example_for_victory(contract):
+    print(contract.call().get())
+    return contract.call().get() == 4
+
 sources = {}
 with open('challenges/example/vulnerable.sol', 'r') as f:
     sources['vulnerable.sol'] = {}
@@ -36,3 +40,6 @@ deployed_contract = deploy_contract(contractFromSolc)
 
 print(deployed_contract.call().getAddress())
 
+deployed_contract.transact({'from': '0x1da7e787a1897046677e57e87177c4de88cc388a'}).set(2, "0x1da7e787a1897046677e57e87177c4de88cc388a")
+
+print(check_example_for_victory(deployed_contract))
