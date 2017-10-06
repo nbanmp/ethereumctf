@@ -2,24 +2,34 @@ var fs = require("fs")
 var solc = require('solc')
 var exports = require('./exports')
 var web3 = exports.web3;
+var vulnerableContracts = exports.vulnerableContracts;
 
 module.exports = {
   go: go
 };
 
-function deployContract(contractFromSolc, contractArgs, callback) {
+function deployContract(contractFromSolc, contractArgs) {
 
       var abi = JSON.parse(contractFromSolc.interface)
       var code = '0x' + contractFromSolc.bytecode
       var MyContract = new web3.eth.Contract(abi)
 
-      MyContract.deploy({
+      return MyContract.deploy({
         data: code,
         arguments: contractArgs
       }).send({
         from: "0x1da7e787a1897046677e57e87177c4de88cc388a",
         gas: 1500000
-      }).then(function (instance) { callback(instance) })
+      }).then(function (instance) {
+        return new Promise((resolve, reject) => {
+            resolve(instance)
+        })
+      }).catch(function (instance) {
+        return new Promise((resolve, reject) => {
+            reject(instance)
+        })
+      })
+
 }
 
 function go() {
@@ -47,9 +57,10 @@ function go() {
         console.log("[In for loop] Deploying: " + contractName)
         contractArgs = []
 
-        deployContract(contracts[contractName], contractArgs, function(instance) {
+        deployContract(contracts[contractName], contractArgs).then(function(instance) {
           console.log('[In for loop] contract mined! address: ' + instance.options.address)
           vulnerableAddress = instance.options.address
+          vulnerableContracts.push(vulnerableAddress)
         }) // deployContract
 
       } // for loop
@@ -60,9 +71,10 @@ function go() {
 
       contractArgs = [vulnerableAddress]
 
-      deployContract(contracts[testContractName ], contractArgs, function(instance) {
+      deployContract(contracts[testContractName], contractArgs).then(function(instance) {
         console.log('[Outside for loop] contract mined! address: ' + instance.options.address)
         vulnerableAddress = instance.options.address
+        vulnerableContracts.push(vulnerableAddress)
       }) // deployContract
 
     } //for loop
