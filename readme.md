@@ -8,29 +8,16 @@ Creates and runs a proof of authority blockchain
 
 Will create vulnerable contracts and test it with calls itself.
 
-Hosts a rest api to provide target addesses to users and check if solutions were right.
-
-Stores shared challenges as an object to match addresses up with challenges.
+Is a CTFd Plugin
 
 ## Expected Usage
 
 ### Set up challenges properly in the directory structure:
 
-File names "vulnerable.sol" and "test.py" are required.
-"vulnerable.sol" is the vulnerable contract. It must have a contract called "Vulnerable" 
-"test.py" is the condition required to win that challenge. See example test.py.
 
-```
-Challenges
-|
-└───Challenge Name
-│   │  vulnerable.sol
-│   │  test.py
-│
-└───Challenge2 Name
-│   │  vulnerable.sol
-│   │  test.py
-```
+### Installation
+Install it like you would any ctfd plugin
 
-### Start
-Run node start.js with the arguments you want.
+## Bugs
+ - If the server stops, active addresses stop working and new ones must be requested.
+ - Changing flags does not work, nor do multiple flags
