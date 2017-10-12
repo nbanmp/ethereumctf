@@ -20,3 +20,4 @@ Place it in the `CTFd/plugins/` directory.
  - Use the database that already exists instead of the filesystem.
  - Allow deploying of non-solidity contracts. (Directly paste in the evm code)
    - Could be in the same input box. Just check for a 0x in front?
+ - Create requirements.txt
