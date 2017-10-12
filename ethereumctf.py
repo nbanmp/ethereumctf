@@ -1,8 +1,13 @@
 import json
+import time
 from web3 import Web3, HTTPProvider, IPCProvider
 from solc import compile_standard
 from solc.exceptions import SolcError
 import dill as pickle
+from CTFd.plugins.ethereumctf import setup
+
+address = '0x' + setup.setup()
+
 
 web3 = Web3(HTTPProvider('http://localhost:8545'))
 
@@ -12,6 +17,7 @@ sources = {}
 flags = {}
 test_functions = {}
 test_functions_sources = {}
+
 
 try:
     with open('CTFd/saved_solidity.json', 'rb') as f:
@@ -112,10 +118,11 @@ def deploy_contract(contractFromSolc):
 
     contract_args = []
     trans_hash = contract_factory.deploy({
-        'from': '0x83be0cc0da0a94bcf257a1aa08905f0b7bfa5591',
+        'from': address,
         'value': 0,
         'gas': 1500000
     }, contract_args)
+    time.sleep(10) # TODO: Do better. (Or just render a loading gif)
     txn_receipt = web3.eth.getTransactionReceipt(trans_hash)
     contract_address = txn_receipt['contractAddress']
 
@@ -171,7 +178,7 @@ if __name__ == "__main__":
 
     print(deployed_contract.call().getAddress())
 
-    deployed_contract.transact({'from': '0x83be0cc0da0a94bcf257a1aa08905f0b7bfa5591'}).set(4, "0x83be0cc0da0a94bcf257a1aa08905f0b7bfa5591")
+    deployed_contract.transact({'from': address}).set(4, address)
 
     print(check_address_for_victory(deployed_contract.address))
 
