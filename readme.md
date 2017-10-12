@@ -1,5 +1,5 @@
 # ethereum-ctf
-Ethereum-ctf is a framework for capture the flag competitions on the ethereum blockchain. It is a CTFd plugin. It currently connects to a http web3 provider and allows for deploying and testing Ethereum contracts (It will run it itself soon). 
+Ethereum-ctf is a framework for capture the flag competitions on the ethereum blockchain. It is a CTFd plugin (https://github.com/CTFd/CTFd). It currently connects to a http web3 provider and allows for deploying and testing Ethereum contracts (It will run it itself soon). 
 ## Usage
 Just paste the solidity source and the test condition into the boxes provided when creating a contract of type "ethereum."
 [TODO: screenshots and code snippets]
