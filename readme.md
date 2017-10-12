@@ -16,7 +16,7 @@ Place it in the `CTFd/plugins/` directory.
 ## Bugs
  - If the server stops, active addresses stop working and new ones must be requested.
  - Changing flags does not work, nor do multiple flags.
- - A testrpc instance needs to be running and an unsecured address must manually be pasted into the code. [FIX ME NEXT]
+ - the geth instance doesn't stop and just runs in the background forever.
 
 ## Todo 
  - Use the database that already exists instead of the filesystem.
