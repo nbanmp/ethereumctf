@@ -63,6 +63,31 @@
                             <input id="chal-id" type="hidden" value="{{id}}">
                         </div>
                         <div class="row notification-row">
+                            <style>
+                                .loader {
+                                    margin-top: 10px;
+                                    border: 10px solid #f3f3f3;
+                                    border-radius: 50%;
+                                    border-top: 10px solid #3498db;
+                                    width: 50px;
+                                    height: 50px;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                    -webkit-animation: spin 1.5s linear infinite;
+                                    animation: spin 1.5s linear infinite;
+                                }
+
+                                @-webkit-keyframes spin {
+                                    0% { -webkit-transform: rotate(0deg); }
+                                    100% { -webkit-transform: rotate(360deg); }
+                                }
+
+                                @keyframes spin {
+                                    0% { transform: rotate(0deg); }
+                                    100% { transform: rotate(360deg); }
+                                }
+                            </style>
+                            <div id="address-loading-symbol" class="loader" role="alert" style="display:none;"></div>
                             <div id="address-notification" class="alert alert-dismissable text-center" role="alert" style="display: none;">
                               <strong id="address-message"></strong>
                             </div>
