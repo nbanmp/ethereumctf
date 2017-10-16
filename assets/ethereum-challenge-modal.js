@@ -57,7 +57,9 @@ function test_address(address, nonce) { // sends a post request to the right pla
 }
 
 function create_contract(chal, nonce) { // Sends a post request to the necessary place to create the challenge, and displays the address
+    $("#get-address").prop("disabled", true);
     $("#address-loading-symbol").css("display", "inherit");
+    $("#address-notification").css("display", "none");
     $.post(script_root + "/ethereum/create", {
         chal: chal,
         nonce: nonce
@@ -65,5 +67,6 @@ function create_contract(chal, nonce) { // Sends a post request to the necessary
         $("#address-message").text(data);
         $("#address-notification").css("display", "inherit");
         $("#address-loading-symbol").css("display", "none");
+        $("#get-address").prop("disabled", false);
     });
 }
