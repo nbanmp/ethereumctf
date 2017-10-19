@@ -52,12 +52,13 @@ def setup():
     subprocess.Popen(('bootnode -nodekey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
     time.sleep(1)
 
-    print('Connect to our blockchain with this command: \ngeth --bootnodes "' + enode_uri + '"')
+    command_to_connect_to_our_node = 'geth --bootnodes "' + enode_uri + '" --datadir ~/.ethereum/ctf'
+    print('Connect to our blockchain with this command:\n' + command_to_connect_to_our_node)
 
     os.remove('password_file')
     os.remove('bootnodekey.key')
 
-    return address
+    return address, command_to_connect_to_our_node
 
 if __name__ == '__main__':
     setup()
