@@ -14,6 +14,7 @@ def setup():
 
     os.system('rm -r ~/.ethereum/ethereumctf')
     os.system('pkill geth')
+    os.system('pkill bootnode')
 
     password = 'password'
     p = subprocess.Popen('geth account new --datadir ~/.ethereum/ethereumctf'.split(), stdout=PIPE, stdin=PIPE, stderr=PIPE)
@@ -32,14 +33,29 @@ def setup():
     with open('password_file', 'w') as f:
         f.write(password)
 
+    # Get bootnode key and enode.
+    subprocess.Popen(('bootnode -genkey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
+    p = subprocess.Popen(('bootnode -nodekey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
+    time.sleep(3)
+    os.system('pkill bootnode')
+    sout, serr = p.communicate()
+    enode_uri = re.search('enode\S+$', str(serr), re.MULTILINE).group(0)[:-3]
+    enode_uri = enode_uri.replace('[::]', 'localhost') # TODO: Correct url instead of localhost
+
     # Run the chain
     # geth --nodiscover --datadir ~/.ethereum/ethereumctf --unlock address --mine --rpcaddr 127.0.0.1 --rpcapi eth,net,web3,personal
     # This runs in the background
     subprocess.Popen(('geth --nodiscover --datadir ~/.ethereum/ethereumctf --unlock 0x' + address + ' --password password_file --mine --rpc --rpcaddr 127.0.0.1 --rpcapi eth,net,web3,personal').split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
     time.sleep(7)
 
+    # Run bootnode
+    subprocess.Popen(('bootnode -nodekey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
+    time.sleep(1)
+
+    print('Connect to our blockchain with this command: \ngeth --bootnodes "' + enode_uri + '"')
+
     os.remove('password_file')
+    os.remove('bootnodekey.key')
 
     return address
 

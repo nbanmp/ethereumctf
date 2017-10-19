@@ -8,7 +8,7 @@ Just paste the solidity source and the test condition into the boxes provided wh
  - testrpc
  - puppeth
  - geth
- - port xxxx open
+ - port 30301 open
 
 ## Installation
 Place it in the `CTFd/plugins/` directory.
@@ -26,3 +26,5 @@ Place it in the `CTFd/plugins/` directory.
  - Provide access to the running blockchain to teams and admins. Provide a simple geth command to connect to it.
    - https://github.com/ethereum/go-ethereum/wiki/Setting-up-private-network-or-local-cluster#private-network
    - Also need to run geth so it is available on a port
+   - Just run a bootnode and provide the right url
+   - STATUS: Bootnode runs, now integrate with CTFd.
