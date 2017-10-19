@@ -2,9 +2,9 @@ from CTFd.plugins import register_plugin_assets_directory, challenges
 from CTFd.plugins.keys import get_key_class
 from CTFd.models import db, Teams, Solves, Awards, Challenges, WrongKeys, Keys, Tags, Files, Tracking, Pages, Config, Hints, Unlocks, DatabaseError
 from CTFd import utils
-from CTFd.plugins.ethereumctf import ethereumctf
 from CTFd.plugins.challenges import CHALLENGE_CLASSES
 from flask import request, render_template, redirect, url_for, abort, jsonify
+from CTFd.plugins.ethereumctf import ethereumctf
 
 
 class BaseChallenge(object):
@@ -105,15 +105,16 @@ def load(app):
         if not request.form or not 'chal' in request.form:
             abort(400)
         chal = request.form['chal']
-        result = ethereumctf.deploy_from_contracts(chal)
+        result = ethereumctf.deploy_from_chalid(chal)
         return result
 
     @app.route('/ethereum/test', methods=['POST'])
     def check():
-        if not request.form or not 'address' in request.form:
+        if not request.form or not 'address' in request.form or not 'chal' in request.form:
             abort(400)
         address_to_test = request.form['address']
-        result = ethereumctf.check_address_for_victory(address_to_test)
+        chalid = request.form['chal']
+        result = ethereumctf.check_address_for_victory(chalid, address_to_test)
         if(result):
             return result
         else:
@@ -155,10 +156,10 @@ def load(app):
                     'id': hint.id
                 })
         elif prop == 'solidity':
-            test_func = ethereumctf.sources[str(chalid)]['content']
+            test_func = ethereumctf.challenges[str(chalid)]['solidity']['source']
             json_data = {'solidity': test_func}
         elif prop == 'test_func':
-            test_func = ethereumctf.test_functions_sources[str(chalid)]
+            test_func = ethereumctf.challenges[str(chalid)]['python_check']
             json_data = {'test_func': test_func}
 
         return jsonify(json_data)
@@ -197,7 +198,7 @@ def load(app):
                 test_func=request.form['test_func']
                 flag = request.form['key']
                 print("[DEBUG] Type is ethereum!")
-                if ethereumctf.compile_contracts(str(chal.id), solidity, test_func, flag):
+                if ethereumctf.compile_contract(str(chal.id), solidity, test_func, flag):
                     print("[DEBUG] successful compile!")
                     # Successful Compile
                 else:

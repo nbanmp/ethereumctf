@@ -7,12 +7,12 @@ $('#get-address').click(function (e) {
 $('#submit-address').unbind('click');
 $('#submit-address').click(function (e) {
     e.preventDefault();
-    test_address($('#address-input').val(), $('#nonce').val())
+    test_address($('#address-input').val(), $('#chal-id').val(), $('#nonce').val())
 });
 
 $("#address-input").keyup(function(event){
     if(event.keyCode == 13){
-        $("#submit-key").click();
+        $("#submit-address").click();
     }
 });
 
@@ -46,9 +46,10 @@ var decoded = $('<textarea/>').html(content).val()
 
 $('.chal-desc').html(marked(content, {'gfm':true, 'breaks':true}));
 
-function test_address(address, nonce) { // sends a post request to the right place to test if it was correctly solved
+function test_address(address, chal, nonce) { // sends a post request to the right place to test if it was correctly solved
     $.post(script_root + "/ethereum/test", {
         address: address,
+        chal: chal,
         nonce: nonce
     }, function (data) {
         $("#check-result-message").text(data);

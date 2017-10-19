@@ -7,6 +7,7 @@ import time
 
 password = 'password'
 
+
 def setup():
     # TODO: CHECK IF GETH IS ALREADY RUNNING (Perhaps not in this func?)
     # TODO: CHECK IF ACCOUNTS ALREADY EXIST
