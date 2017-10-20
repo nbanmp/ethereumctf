@@ -1,8 +1,10 @@
 # ethereum-ctf
 Ethereum-ctf is a framework for capture the flag competitions on the ethereum blockchain. It is a CTFd plugin (https://github.com/CTFd/CTFd). It runs a proof of authority blockchain and connects to a http web3 provider that it runs and allows for deploying and testing Ethereum contracts. 
+
 ## Usage
 Just paste the solidity source and the test condition into the boxes provided when creating a contract of type "ethereum."
 [TODO: screenshots and code snippets]
+
 ## Requirements
  - dill (pip install dill)
  - testrpc
@@ -12,7 +14,7 @@ Just paste the solidity source and the test condition into the boxes provided wh
  - ports 30301 (UDP) & 30303 (TCP & UDP) open
 
 ## Installation
-Place it in the `CTFd/plugins/` directory.
+Clone it into the `CTFd/plugins/` directory.
 
 ## Bugs
  - Changing flags does not work, nor do multiple flags.
@@ -25,4 +27,4 @@ Place it in the `CTFd/plugins/` directory.
    - Could be in the same input box. Just check for a 0x in front?
    - Also need abi
  - Create requirements.txt
- - Check if a blockchain is already running and dont restart it if it is not necessary.
+ - Check if a blockchain is already running and don't restart it if it is not necessary.
