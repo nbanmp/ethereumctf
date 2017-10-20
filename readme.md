@@ -27,4 +27,5 @@ Clone it into the `CTFd/plugins/` directory.
    - Could be in the same input box. Just check for a 0x in front?
    - Also need abi
  - Create requirements.txt
+ - Create config.html
  - Check if a blockchain is already running and don't restart it if it is not necessary.
