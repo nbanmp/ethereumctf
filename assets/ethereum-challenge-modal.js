@@ -1,3 +1,9 @@
+$('#geth-command').ready(function() {
+    $.get(script_root + "/ethereum/geth_command", function (data) {
+        $('#geth-command').text(data);
+    })
+})
+
 $('#get-address').unbind('click');
 $('#get-address').click(function (e) {
     e.preventDefault();

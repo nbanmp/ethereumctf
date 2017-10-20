@@ -6,24 +6,12 @@ from solc.exceptions import SolcError
 import dill as pickle
 from CTFd.plugins.ethereumctf.setup import setup
 
-# from CTFd.plugins.ethereumctf import setup
-
-# functions used:
-    # deploy_from_contracts(chalid) (deploy_from_chalid)
-    # deploy_contract(contractFromSolc)
-    # check_address_for_victory(address)
-    # compile contract(s)
-
-# Variables needed:
-    # solidity source
-    # test function source
-
-    #challenges = {}
-    #challenges[challenge]['solidity']['compiled'] = a string == contracts[chalid]
-    #challenges[challenge]['solidity']['source'] = a string == contracts[chalid]
-    #challenges[challenge]['python_check'] = a string
-    #challenges[challenge]['deployed'] = []
-    #challenges[challenge]['flag']
+#challenges = {}
+#challenges[challenge]['solidity']['compiled'] = a string == contracts[chalid]
+#challenges[challenge]['solidity']['source'] = a string == contracts[chalid]
+#challenges[challenge]['python_check'] = a string
+#challenges[challenge]['deployed'] = []
+#challenges[challenge]['flag']
 
 def load_challenges():
     try:
@@ -33,7 +21,8 @@ def load_challenges():
         challenges = {}
     return challenges
 
-address = '0x' + setup()
+address, connect_to_geth_command = setup()
+address = '0x' + address
 web3 = Web3(HTTPProvider('http://localhost:8545'))
 challenges = load_challenges()
 

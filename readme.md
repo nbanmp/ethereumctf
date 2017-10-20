@@ -7,8 +7,9 @@ Just paste the solidity source and the test condition into the boxes provided wh
  - dill (pip install dill)
  - testrpc
  - puppeth
+ - bootnode
  - geth
- - port 30301 open
+ - ports 30301 (UDP) & 30303 (TCP & UDP) open
 
 ## Installation
 Place it in the `CTFd/plugins/` directory.
@@ -16,6 +17,7 @@ Place it in the `CTFd/plugins/` directory.
 ## Bugs
  - Changing flags does not work, nor do multiple flags.
  - the geth instance doesn't stop and just runs in the background forever.
+ - the geth instance is restarted and a new blockchain is created each time.  
 
 ## Todo 
  - Use the database that already exists instead of the filesystem.
@@ -23,8 +25,4 @@ Place it in the `CTFd/plugins/` directory.
    - Could be in the same input box. Just check for a 0x in front?
    - Also need abi
  - Create requirements.txt
- - Provide access to the running blockchain to teams and admins. Provide a simple geth command to connect to it.
-   - https://github.com/ethereum/go-ethereum/wiki/Setting-up-private-network-or-local-cluster#private-network
-   - Also need to run geth so it is available on a port
-   - Just run a bootnode and provide the right url
-   - STATUS: Bootnode runs, now integrate with CTFd.
+ - Check if a blockchain is already running and dont restart it if it is not necessary.

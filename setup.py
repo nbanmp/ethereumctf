@@ -35,12 +35,19 @@ def setup():
 
     # Get bootnode key and enode.
     subprocess.Popen(('bootnode -genkey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
-    p = subprocess.Popen(('bootnode -nodekey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
-    time.sleep(3)
-    os.system('pkill bootnode')
-    sout, serr = p.communicate()
-    enode_uri = re.search('enode\S+$', str(serr), re.MULTILINE).group(0)[:-3]
-    enode_uri = enode_uri.replace('[::]', 'localhost') # TODO: Correct url instead of localhost
+    time.sleep(1)
+    enode_uri = None
+    while not enode_uri:
+        try:
+            p = subprocess.Popen(('bootnode -nodekey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
+            time.sleep(3)
+            os.system('pkill bootnode')
+            sout, serr = p.communicate()
+            enode_uri = re.search('enode\S+$', str(serr), re.MULTILINE).group(0)[:-3]
+        except:
+            print("[DEBUG] Trying to get enode_uri again.")
+            pass
+    #enode_uri = enode_uri.replace('[::]', 'localhost') # TODO: Correct url instead of localhost
 
     # Run the chain
     # geth --nodiscover --datadir ~/.ethereum/ethereumctf --unlock address --mine --rpcaddr 127.0.0.1 --rpcapi eth,net,web3,personal

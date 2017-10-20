@@ -5,7 +5,7 @@ from CTFd import utils
 from CTFd.plugins.challenges import CHALLENGE_CLASSES
 from flask import request, render_template, redirect, url_for, abort, jsonify
 from CTFd.plugins.ethereumctf import ethereumctf
-
+from urllib.parse import urlparse
 
 class BaseChallenge(object):
     id = None
@@ -93,11 +93,9 @@ def get_chal_class(class_id):
 
 
 def load(app):
-    @app.route('/ethereum/my_test', methods=['GET'])
-    def my_test():
-        for i in range(len(CHALLENGE_CLASSES)):
-            print(CHALLENGE_CLASSES)
-        return "See logs"
+    @app.route('/ethereum/geth_command', methods=['GET'])
+    def geth_command():
+        return ethereumctf.connect_to_geth_command.replace('[::]', urlparse(request.url_root).hostname)
 
     @app.route('/ethereum/create', methods=['POST'])
     def create():
