@@ -3,7 +3,7 @@ from subprocess import PIPE
 import re
 import os
 import time
-
+import socket
 
 password = 'password'
 
@@ -14,7 +14,6 @@ def setup():
 
     os.system('rm -r ~/.ethereum/ethereumctf')
     os.system('pkill geth')
-    os.system('pkill bootnode')
 
     password = 'password'
     p = subprocess.Popen('geth account new --datadir ~/.ethereum/ethereumctf'.split(), stdout=PIPE, stdin=PIPE, stderr=PIPE)
@@ -33,21 +32,22 @@ def setup():
     with open('password_file', 'w') as f:
         f.write(password)
 
-    # Get bootnode key and enode.
-    subprocess.Popen(('bootnode -genkey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
-    time.sleep(1)
+    # Get enode.
     enode_uri = None
     while not enode_uri:
         try:
-            p = subprocess.Popen(('bootnode -nodekey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
-            time.sleep(3)
-            os.system('pkill bootnode')
+            p = subprocess.Popen(('geth --networkid 1337 --datadir ~/.ethereum/ethereumctf --ipcdisable').split(), stdout=PIPE, stderr=PIPE)
+            time.sleep(5)
+            os.system('kill ' + str(p.pid))
             sout, serr = p.communicate()
-            enode_uri = re.search('enode\S+$', str(serr), re.MULTILINE).group(0)[:-3]
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            ip = s.getsockname()[0]
+            s.close()
+            enode_uri = re.search('enode\S+$', str(serr), re.MULTILINE).group(0)[:-3].replace('[::]', ip)
         except:
             print("[DEBUG] Trying to get enode_uri again.")
             pass
-    #enode_uri = enode_uri.replace('[::]', 'localhost') # TODO: Correct url instead of localhost
 
     # Run the chain
     # geth --nodiscover --datadir ~/.ethereum/ethereumctf --unlock address --mine --rpcaddr 127.0.0.1 --rpcapi eth,net,web3,personal
@@ -55,17 +55,18 @@ def setup():
     subprocess.Popen(('geth --networkid 1337 --datadir ~/.ethereum/ethereumctf --unlock 0x' + address + ' --password password_file --mine --rpc --rpcaddr 127.0.0.1 --rpcapi admin,debug,miner,rpc,txpool,eth,net,web3,personal').split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(7)
 
-    # Run bootnode
-    subprocess.Popen(('bootnode -nodekey bootnodekey.key').split(), stdout=PIPE, stderr=PIPE)
-    time.sleep(1)
+    command_to_connect_to_our_node = 'geth --datadir ~/.ethereum/ctf --networkid 1337 --bootnodes "' + enode_uri + '"'
 
-    command_to_connect_to_our_node = 'geth --networkid 1337 --bootnodes "' + enode_uri + '" --datadir ~/.ethereum/ctf'
-    print('Connect to our blockchain with this command:\n' + command_to_connect_to_our_node)
+    print('[ETHEREUMCTF] Connect to our blockchain with this command:\n' + command_to_connect_to_our_node)
 
     os.remove('password_file')
     #os.remove('bootnodekey.key')
 
-    return address, command_to_connect_to_our_node
+    #read genesis json
+    with open('ethereumctf.json', 'r') as f:
+        genesis_json = f.read()
+
+    return address, command_to_connect_to_our_node, genesis_json
 
 if __name__ == '__main__':
     setup()

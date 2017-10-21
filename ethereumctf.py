@@ -21,7 +21,7 @@ def load_challenges():
         challenges = {}
     return challenges
 
-address, connect_to_geth_command = setup()
+address, connect_to_geth_command, genesis_json = setup()
 address = '0x' + address
 web3 = Web3(HTTPProvider('http://localhost:8545'))
 challenges = load_challenges()

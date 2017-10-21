@@ -95,7 +95,15 @@ def get_chal_class(class_id):
 def load(app):
     @app.route('/ethereum/geth_command', methods=['GET'])
     def geth_command():
-        return ethereumctf.connect_to_geth_command.replace('[::]', urlparse(request.url_root).hostname)
+        command = ''
+        command += 'wget http://' + urlparse(request.url).netloc + '/ethereum/genesis.json\n'
+        command += 'geth --datadir ~/.ethereum/ctf init genesis.json\n'
+        command += ethereumctf.connect_to_geth_command
+        return command
+
+    @app.route('/ethereum/genesis.json', methods=['GET'])
+    def get_genesis():
+        return ethereumctf.genesis_json
 
     @app.route('/ethereum/create', methods=['POST'])
     def create():
