@@ -56,15 +56,9 @@
                         </div>
 
                         <!-- START ADDED BY ME -->
-                        <div class="row text-center">
-                            <h4>Connect with geth:</h4>
-                        </div>
-                        <div class="row">
-                            <pre><code id="geth-command"></code></pre>
-                        </div>
                         <div class="row submit-row">
                             <div class="key-submit">
-                                <button type="submit" id="get-address" tabindex="5" class="btn btn-md btn-theme btn-outlined btn-block" style="height:46.375px">Get Address</button>
+                                <button type="submit" id="get-address" tabindex="5" class="btn btn-md btn-theme btn-outlined btn-block" style="height:46.375px">Get Contract Address</button>
                             </div>
                             <input id="chal-id" type="hidden" value="{{id}}">
                         </div>
@@ -116,6 +110,7 @@
                               <strong id="check-result-message"></strong>
                             </div>
                         </div>
+
                         <!-- END ADDED BY ME -->
 
                         <div class="row submit-row">
@@ -135,6 +130,32 @@
                               <strong id="result-message"></strong>
                             </div>
                         </div>
+                        <!-- BEGIN ADDED BY ME -->
+                        <div class="row text-center">
+                            <h3>Tools:</h3>
+                        </div>
+                        <div class="row text-center">
+                            <h4>Connect with geth:</h4>
+                        </div>
+                        <div class="row">
+                            <pre><code id="geth-command"></code></pre>
+                        </div>
+                        <div class="row text-center">
+                            <h4>Get ether into an account you created:</h4>
+                        </div>
+                        <div class="row">
+                            <form action="/ethereum/faucet" method="get" target="_blank">
+                                <div class="col-md-9" style="padding-right:0px;padding-left:10px;">
+                                    <span class="input">
+                                        <input class="input-field" type="text" name="address" id="address-faucet-input" placeholder="0x1234567890abcdef" />
+                                    </span>
+                                </div>
+                                <div class="col-md-3 key-submit">
+                                    <button type="submit" id="submit-faucet-address" tabindex="5" class="btn btn-md btn-theme btn-outlined pull-right" style="height:46.375px">Get Ether</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- END ADDED BY ME -->
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="solves">
                         <table class="table table-striped text-center">

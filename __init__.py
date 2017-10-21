@@ -105,6 +105,23 @@ def load(app):
     def get_genesis():
         return ethereumctf.genesis_json
 
+    @app.route('/ethereum/faucet', methods=['POST', 'GET'])
+    def fauceteth():
+        if request.method == 'POST':
+            if not request.form or not 'address' in request.form:
+                abort(400)
+            if ethereumctf.faucet(request.form['address']):
+                return "Success! You recieved 1 ether."
+            else:
+                return "Failure. Wrong address?"
+        else: # GET request
+            if not request.args or not 'address' in request.args:
+                abort(400)
+            if ethereumctf.faucet(request.args['address']):
+                return "Success"
+            else:
+                return "Failure"
+
     @app.route('/ethereum/create', methods=['POST'])
     def create():
         print(request.form) # Debugging

@@ -99,6 +99,13 @@ def check_address_for_victory(chalid, address):
     else:
         return "Try another address."
 
+def faucet(address):
+    try:
+        web3.eth.sendTransaction({'to': address, 'from': web3.eth.coinbase, 'value': 10000000000000000000})
+        return True
+    except Exception as e:
+        print(e)
+        return False
 
 if __name__ == '__main__':
     pass
