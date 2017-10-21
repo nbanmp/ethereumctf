@@ -6,19 +6,19 @@ Just paste the solidity source and the test condition into the boxes provided wh
 [TODO: screenshots and code snippets]
 
 The plugin creates a new challenge type: "ethereum"
-[Image 1](images/create-challenge-1.png)
+![Image 1](images/create-challenge-1.png)
 
 When creating a challenge, paste in the solidity source and write a python lambda function to evaluate to true on a successful solve.
-[Image 2](images/create-challenge-2.png)
+![Image 2](images/create-challenge-2.png)
 
 To solve the challenge, the address to a new contract must be requested:
-[Image 3](images/get-contract-address.png)
+![Image 3](images/get-contract-address.png)
 
 The user can connect to a running blockchain using the displayed commands and can use the ethereum faucet to aquire some ethereum to exploit the vulnerable contracts.
-[Image 4](images/view-challenge-tools.png)
+![Image 4](images/view-challenge-tools.png)
 
 After solving the challenge, a flag can be requested.
-[Image 5](images/successful-solve-2.png)
+![Image 5](images/successful-solve-2.png)
 
 ## Requirements
  - CTFd
