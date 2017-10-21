@@ -8,7 +8,7 @@ Just paste the solidity source and the test condition into the boxes provided wh
 The plugin creates a new challenge type: "ethereum"
 ![Image 1](images/create-challenge-1.png)
 
-When creating a challenge, paste in the solidity source and write a python lambda function to evaluate to true on a successful solve.
+When creating a challenge, paste in the solidity source and write a python expression that evaluates to true on a successful solve.
 ![Image 2](images/create-challenge-2.png)
 
 To solve the challenge, the address to a new contract must be requested:
