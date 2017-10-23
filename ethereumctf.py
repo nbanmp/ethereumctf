@@ -10,6 +10,7 @@ from CTFd.plugins.ethereumctf.setup import setup
 #challenges[challenge]['solidity']['compiled'] = a string == contracts[chalid]
 #challenges[challenge]['solidity']['source'] = a string == contracts[chalid]
 #challenges[challenge]['python_check'] = a string
+#challenges[challenge]['starting_value'] = starting ether in contract
 #challenges[challenge]['deployed'] = []
 #challenges[challenge]['flag']
 
@@ -30,7 +31,7 @@ def save_challenges():
     with open('CTFd/saved_challenges.pickle', 'wb') as f:
         f.write(pickle.dumps(challenges))
 
-def compile_contract(chalid, solidity_source, test_func_source, flag=None):
+def compile_contract(chalid, solidity_source, test_func_source, starting_ether=0, flag=None):
     # add flag
     if flag == None:
         flag = challenges[chalid]['flag']
@@ -45,6 +46,8 @@ def compile_contract(chalid, solidity_source, test_func_source, flag=None):
     # Set solidity sources
     challenges[chalid]['solidity'] = {}
     challenges[chalid]['solidity']['source'] = solidity_source
+    challenges[chalid]['starting_value'] = 0
+    challenges[chalid]['starting_value'] = int(starting_ether) * int(1000000000000000000) # Ether to wei conversion
 
     try:
         # Compile Solidity
@@ -62,7 +65,7 @@ def compile_contract(chalid, solidity_source, test_func_source, flag=None):
 
 # This is called when deploying for a normal person
 def deploy_from_chalid(chalid):
-    r = deploy_contract(challenges[chalid]['solidity']['compiled']['Vulnerable'])
+    r = deploy_contract(challenges[chalid]['solidity']['compiled']['Vulnerable'], contract_args=[], starting_value=challenges[chalid]['starting_value'])
     if not 'deployed' in challenges[chalid]:
         challenges[chalid]['deployed'] = []
     challenges[chalid]['deployed'].append(r.address)
@@ -70,14 +73,14 @@ def deploy_from_chalid(chalid):
     save_challenges()
     return r.address
 
-def deploy_contract(compiled_contract, contract_args=[]):
+def deploy_contract(compiled_contract, contract_args=[], starting_value=0):
     abi = compiled_contract['abi']
     code = compiled_contract['evm']['bytecode']['object']
     contract_factory = web3.eth.contract(abi, bytecode=code)
 
     trans_hash = contract_factory.deploy({
         'from': address,
-        'value': 0,
+        'value': starting_value,
         'gas': 1500000
     }, contract_args)
     time.sleep(10) # TODO: Do better. (Or just render a loading gif and pretend we're good.)
@@ -104,7 +107,6 @@ def faucet(address):
         web3.eth.sendTransaction({'to': address, 'from': web3.eth.coinbase, 'value': 10000000000000000000})
         return True
     except Exception as e:
-        print(e)
         return False
 
 if __name__ == '__main__':

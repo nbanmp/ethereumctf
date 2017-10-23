@@ -70,6 +70,15 @@ function loadtestfunc(chal) {
     });
 }
 
+function loadstartingether(chal) {
+    var chalid = $('.chal-id').val();
+    $.get(script_root + '/admin/chal/' + chalid + '/starting_ether', {
+    }, function(data){
+        $('#starting-ether-input').val(data['starting_ether']);
+    });
+    
+}
+
 // End added by me
 
 function loadkeys(chal){

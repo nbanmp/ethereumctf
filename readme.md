@@ -3,7 +3,6 @@ Ethereum-ctf is a framework for capture the flag competitions on the ethereum bl
 
 ## Usage
 Just paste the solidity source and the test condition into the boxes provided when creating a contract of type "ethereum." The source must contain a contract called "Vulnerable."
-[TODO: screenshots and code snippets]
 
 The plugin creates a new challenge type: "ethereum"
 ![Image 1](images/create-challenge-1.png)
@@ -36,6 +35,7 @@ Clone it into the `CTFd/plugins/` directory.
  - the geth instance is restarted and a new blockchain is created each time the plugin is refreshed.  
 
 ## Todo 
+ - Specify arguments for the deployed contracts.
  - Use the database that already exists instead of the filesystem.
  - Allow deploying of non-solidity contracts. (Directly paste in the evm code)
    - Could be in the same input box. Just check for a 0x in front?
@@ -44,4 +44,3 @@ Clone it into the `CTFd/plugins/` directory.
  - Create requirements.txt
  - Create config.html
  - Check if a blockchain is already running and do not restart it if restarting is not necessary.
- - Allow for starting contracts preloaded with ethereum

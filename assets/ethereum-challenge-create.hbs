@@ -37,7 +37,7 @@
                     <label for="solidity" class="control-label">Solidity Source:
                         <i class="fa fa-question-circle gray-text" data-toggle="tooltip" data-placement="right" title="Paste the solidity source for the contract here."></i>
                     </label>
-                    <textarea id="new-solidity-editor" class="form-control" name="solidity" rows="10"></textarea>
+                    <textarea id="new-solidity-editor" class="form-control" name="solidity" rows="10" required></textarea>
                 </div>
             </div>
         </div>
@@ -49,9 +49,16 @@
                         <i class="fa fa-question-circle gray-text"
                         data-toggle="tooltip" data-placement="right" title="Paste a one line expression to test the contract here. You have access to your contract as a web3 contract called 'contract'"></i>
                     </label>
-                    <input id="new-test-func-editor" class="form-control" name="test_func" placeholder="contract.call().myFunction() == 4 and contract.call().getUserBalance < 0" rows="10"></textarea>
+                    <input id="new-test-func-editor" class="form-control" name="test_func" placeholder="contract.call().myFunction() == 4 and contract.call().getUserBalance < 0" rows="10" required></textarea>
                 </div>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="starting-ether">Starting Ether
+                <i class="fa fa-question-circle gray-text" data-toggle="tooltip" data-placement="right" title="This is how much ether the smart contract should be preloaded with. The constructor must be payable."></i>
+            </label>
+            <input type="number" class="form-control" name="starting-ether" placeholder="Enter starting ether" required>
         </div>
 
         <!-- END ADDED BY ME -->

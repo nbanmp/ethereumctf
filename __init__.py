@@ -184,6 +184,9 @@ def load(app):
         elif prop == 'test_func':
             test_func = ethereumctf.challenges[str(chalid)]['python_check']
             json_data = {'test_func': test_func}
+        elif prop == 'starting_ether':
+            result = ethereumctf.challenges[str(chalid)]['starting_ether']
+            json_data = {'starting_ether': result}
 
         return jsonify(json_data)
 
@@ -219,9 +222,10 @@ def load(app):
             if chal.type == 'ethereum':
                 solidity=request.form['solidity']
                 test_func=request.form['test_func']
+                starting_ether=request.form['starting-ether']
                 flag = request.form['key']
                 print("[DEBUG] Type is ethereum!")
-                if ethereumctf.compile_contract(str(chal.id), solidity, test_func, flag):
+                if ethereumctf.compile_contract(str(chal.id), solidity, test_func, starting_ether, flag):
                     print("[DEBUG] successful compile!")
                     # Successful Compile
                 else:
@@ -262,7 +266,8 @@ def load(app):
         if challenge.type == 'ethereum':
             solidity=request.form['solidity']
             test_func=request.form['test_func']
-            if ethereumctf.compile_contracts(str(challenge.id), solidity, test_func):
+            starting_ether=request.form['starting-ether']
+            if ethereumctf.compile_contract(str(challenge.id), solidity, test_func, starting_ether):
                 print("[DEBUG] successful compile!")
                 # Successful Compile
             else:
