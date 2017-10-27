@@ -11,6 +11,7 @@ from CTFd.plugins.ethereumctf.setup import setup
 #challenges[challenge]['solidity']['source'] = a string == contracts[chalid]
 #challenges[challenge]['python_check'] = a string
 #challenges[challenge]['starting_value'] = starting ether in contract
+#challenges[challenge]['args'] = initial arguments (an array) []
 #challenges[challenge]['deployed'] = []
 #challenges[challenge]['flag']
 
@@ -31,7 +32,7 @@ def save_challenges():
     with open('CTFd/saved_challenges.pickle', 'wb') as f:
         f.write(pickle.dumps(challenges))
 
-def compile_contract(chalid, solidity_source, test_func_source, starting_ether=0, flag=None):
+def compile_contract(chalid, solidity_source, test_func_source, args=[], starting_ether=0, flag=None):
     # add flag
     if flag == None:
         flag = challenges[chalid]['flag']
@@ -48,6 +49,7 @@ def compile_contract(chalid, solidity_source, test_func_source, starting_ether=0
     challenges[chalid]['solidity']['source'] = solidity_source
     challenges[chalid]['starting_value'] = 0
     challenges[chalid]['starting_value'] = int(starting_ether) * int(1000000000000000000) # Ether to wei conversion
+    challenges[chalid]['args'] = args
 
     try:
         # Compile Solidity
@@ -65,7 +67,7 @@ def compile_contract(chalid, solidity_source, test_func_source, starting_ether=0
 
 # This is called when deploying for a normal person
 def deploy_from_chalid(chalid):
-    r = deploy_contract(challenges[chalid]['solidity']['compiled']['Vulnerable'], contract_args=[], starting_value=challenges[chalid]['starting_value'])
+    r = deploy_contract(challenges[chalid]['solidity']['compiled']['Vulnerable'], contract_args=challenges[chalid]['args'], starting_value=challenges[chalid]['starting_value'])
     if not 'deployed' in challenges[chalid]:
         challenges[chalid]['deployed'] = []
     challenges[chalid]['deployed'].append(r.address)

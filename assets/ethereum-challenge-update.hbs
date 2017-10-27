@@ -58,7 +58,18 @@
                                     <i class="fa fa-question-circle gray-text"
                                     data-toggle="tooltip" data-placement="right" title="Paste a one line expression to test the contract here. You have access to your contract as a web3 contract called 'contract'"></i>
                                 </label>
-                                <input id="test-func-editor" class="form-control" name="test_func" placeholder="contract.call().myFunction() == 4 and contract.call().getUserBalance < 0" rows="10"></textarea>
+                                <input id="test-func-editor" class="form-control" name="test_func" placeholder="contract.call().myFunction() == 4 and contract.call().getUserBalance < 0" rows="10"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="args-write">
+                            <div class="form-group">
+                                <label for="args" class="control-label">Starting Arguments (Python List):
+                                    <i class="fa fa-question-circle gray-text"
+                                    data-toggle="tooltip" data-placement="right" title="Paste a python list that contains the arguments to the contract. Default:[]"></i>
+                                </label>
+                                <input id="args-editor" class="form-control" name="args" rows="10" required></input>
                             </div>
                         </div>
                     </div>

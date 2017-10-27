@@ -1,6 +1,8 @@
 # ethereum-ctf
 Ethereum-ctf is a framework for capture the flag competitions on the ethereum blockchain. It is a CTFd plugin (https://github.com/CTFd/CTFd). It runs a proof of authority blockchain and connects runs a http web3 provider. It deploys and tests Ethereum smart contracts.
 
+![Image 0](images/view-challenge-tools.png)
+
 ## Usage
 Just paste the solidity source and the test condition into the boxes provided when creating a contract of type "ethereum." The source must contain a contract called "Vulnerable."
 
@@ -35,12 +37,12 @@ Clone it into the `CTFd/plugins/` directory.
  - the geth instance is restarted and a new blockchain is created each time the plugin is refreshed.  
 
 ## Todo 
- - Specify arguments for the deployed contracts.
- - Use the database that already exists instead of the filesystem.
+ - Move Bugs and Todo categories of the readme to GitHub issues.
+ - Create requirements.txt
+ - Create config.html
+ - Check if a blockchain is already running and do not restart it if restarting is not necessary.
  - Allow deploying of non-solidity contracts. (Directly paste in the evm code)
    - Could be in the same input box. Just check for a 0x in front?
    - Also need abi
    - or two types of challenges "ethereum-solidity" and "ethereum-evm"
- - Create requirements.txt
- - Create config.html
- - Check if a blockchain is already running and do not restart it if restarting is not necessary.
+ - Use the database that already exists instead of the filesystem.

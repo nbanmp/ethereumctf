@@ -76,7 +76,14 @@ function loadstartingether(chal) {
     }, function(data){
         $('#starting-ether-input').val(data['starting_ether']);
     });
-    
+}
+
+function loadargs(chal) {
+    var chalid = $('.chal-id').val();
+    $.get(script_root + '/admin/chal/' + chalid + '/args', {
+    }, function(data){
+        $('#args-editor').val(data['args']);
+    });
 }
 
 // End added by me
@@ -419,6 +426,8 @@ function openchal(id){
     loadsolidity(id)
     loadsolidity(id);
     loadtestfunc(id);
+    loadstartingether(id);
+    loadargs(id);
 }
 
 $(document).ready(function(){

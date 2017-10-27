@@ -6,6 +6,8 @@ from CTFd.plugins.challenges import CHALLENGE_CLASSES
 from flask import request, render_template, redirect, url_for, abort, jsonify
 from CTFd.plugins.ethereumctf import ethereumctf
 from urllib.parse import urlparse
+import json
+import ast
 
 class BaseChallenge(object):
     id = None
@@ -185,8 +187,11 @@ def load(app):
             test_func = ethereumctf.challenges[str(chalid)]['python_check']
             json_data = {'test_func': test_func}
         elif prop == 'starting_ether':
-            result = ethereumctf.challenges[str(chalid)]['starting_ether']
-            json_data = {'starting_ether': result}
+            result = ethereumctf.challenges[str(chalid)]['starting_value']
+            json_data = {'starting_ether': str(result / 1000000000000000000) }
+        elif prop == 'args':
+            result = ethereumctf.challenges[str(chalid)]['args']
+            json_data = {'args': json.dumps(result)}
 
         return jsonify(json_data)
 
@@ -222,12 +227,12 @@ def load(app):
             if chal.type == 'ethereum':
                 solidity=request.form['solidity']
                 test_func=request.form['test_func']
+                args=request.form['args']
                 starting_ether=request.form['starting-ether']
                 flag = request.form['key']
                 print("[DEBUG] Type is ethereum!")
-                if ethereumctf.compile_contract(str(chal.id), solidity, test_func, starting_ether, flag):
+                if ethereumctf.compile_contract(str(chal.id), solidity, test_func, ast.literal_eval(args), starting_ether, flag):
                     print("[DEBUG] successful compile!")
-                    # Successful Compile
                 else:
                     db.session.rollback()
                     print("[DEBUG] failed compile")
@@ -266,8 +271,9 @@ def load(app):
         if challenge.type == 'ethereum':
             solidity=request.form['solidity']
             test_func=request.form['test_func']
+            args=request.form['args']
             starting_ether=request.form['starting-ether']
-            if ethereumctf.compile_contract(str(challenge.id), solidity, test_func, starting_ether):
+            if ethereumctf.compile_contract(str(challenge.id), solidity, test_func, ast.literal_eval(args), starting_ether):
                 print("[DEBUG] successful compile!")
                 # Successful Compile
             else:
