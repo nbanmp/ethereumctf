@@ -30,19 +30,3 @@ After solving the challenge, a flag can be requested.
 
 ## Installation
 Clone it into the `CTFd/plugins/` directory.
-
-## Bugs
- - Changing flags does not work, nor do multiple flags.
- - the geth instance does not stop and runs in the background forever.
- - the geth instance is restarted and a new blockchain is created each time the plugin is refreshed.  
-
-## Todo 
- - Move Bugs and Todo categories of the readme to GitHub issues.
- - Create requirements.txt
- - Create config.html
- - Check if a blockchain is already running and do not restart it if restarting is not necessary.
- - Allow deploying of non-solidity contracts. (Directly paste in the evm code)
-   - Could be in the same input box. Just check for a 0x in front?
-   - Also need abi
-   - or two types of challenges "ethereum-solidity" and "ethereum-evm"
- - Use the database that already exists instead of the filesystem.
