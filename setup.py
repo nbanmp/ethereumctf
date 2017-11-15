@@ -9,16 +9,22 @@ password = 'password'
 
 
 def setup():
-    # TODO: CHECK IF GETH IS ALREADY RUNNING (Perhaps not in this func?)
-    # TODO: CHECK IF ACCOUNTS ALREADY EXIST
+    # TODO: CHECK IF GETH IS ALREADY RUNNING
 
-    os.system('rm -r ~/.ethereum/ethereumctf')
     os.system('pkill geth')
 
     password = 'password'
-    p = subprocess.Popen('geth account new --datadir ~/.ethereum/ethereumctf'.split(), stdout=PIPE, stdin=PIPE, stderr=PIPE)
+
+    p = subprocess.Popen('geth account list --datadir ~/.ethereum/ethereumctf'.split(), stdout=PIPE, stdin=PIPE, stderr=PIPE)
     sout, serr = p.communicate(bytes(password + '\n' + password + '\n', 'utf8'))
-    address = re.search('{(.*)}', str(sout)).group(1)
+    match = re.search('{(.*)}', str(sout))
+    if match:
+        address = match.group(1)
+    else:
+        p = subprocess.Popen('geth account new --datadir ~/.ethereum/ethereumctf'.split(), stdout=PIPE, stdin=PIPE, stderr=PIPE)
+        sout, serr = p.communicate(bytes(password + '\n' + password + '\n', 'utf8'))
+        address = re.search('{(.*)}', str(sout)).group(1)
+
     print("Address: " + address)
 
     # http://blog.enuma.io/update/2017/08/29/proof-of-authority-ethereum-networks.html
