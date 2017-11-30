@@ -15,15 +15,15 @@ When creating a challenge, paste in the solidity source and write a python expre
 To solve the challenge, the address to a new contract must be requested:
 ![Image 3](images/get-contract-address.png)
 
-The user can connect to a running blockchain using the displayed commands and can use the ethereum faucet to aquire some ethereum to exploit the vulnerable contracts.
+The user can connect to a running blockchain using the displayed commands and can use the faucet to acquire some ethereum to exploit the vulnerable contracts.
 ![Image 4](images/view-challenge-tools.png)
 
 After solving the challenge, a flag can be requested.
 ![Image 5](images/successful-solve-2.png)
 
 ## Requirements
+ - `pip install -r requirements.txt`
  - CTFd
- - dill (pip install dill)
  - geth
  - puppeth
  - ports 30301 (UDP) & 30303 (TCP & UDP) open
