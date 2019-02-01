@@ -1,5 +1,7 @@
 # OUT OF DATE & INCOMPLETE
-CTFd updates broke some of my hacks. I'm still planning on getting back to this in the near future.
+CTFd updates broke some of my hacks. I completely rewrote it and took a different, simpler, approach.
+
+See: https://github.com/nbanmp/ctfd-oracle-challenges
 
 # ethereum-ctf
 Ethereum-ctf is a framework for capture the flag competitions on the ethereum blockchain. It is a CTFd plugin (https://github.com/CTFd/CTFd). It runs a proof of authority blockchain and connects runs a http web3 provider. It deploys and tests Ethereum smart contracts.
